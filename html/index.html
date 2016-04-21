@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Simple Sidebar - Start Bootstrap Template</title>
+        <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="http://120.27.93.15:8080/arcgis_js_api/library/3.9/3.9/js/esri/css/esri.css">
+        <link rel="stylesheet" href="../css/simple-sidebar.css">
+        <link rel="stylesheet" href="../lib/flat-ui/dist/css/flat-ui.min.css">
+        <link rel="stylesheet" href="../lib/bootstrap-datepicker/bootstrap-datepicker3.min.css">
+        <link rel="stylesheet" href="../css/main.css">
+    </head>
+    <body>
+        <nav id="navbar" class="navbar navbar-inverse navbar-embossed" role="navigation" style="margin: 0px;">
+            <div class="nav navbar-nav navbar-left">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <a href="#" id="menu-toggle" class="btn btn-primary"><i class="fui-list-columned"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">D-Map</a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-collapse-9">
+                <form class="navbar-form navbar-right" role="form">
+                    <div class="form-group">
+                        <input type="text" placeholder="邮箱" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="密码" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success" >登录</button>
+                    <button type="submit" class="btn btn-danger">注册</button>
+                </form>
+            </div>
+        </nav>
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+                <!-- 侧边栏 -->
+                <div class="slideMenu">
+                    <ul class="nav nav-tabs nav-stacked" id="slideMenu">
+                        <li  class="active seamless">
+                            <a href="#marketing"  data-toggle="tab" class="btn btn-success" style="border: 0px;margin: 0px;">
+                                <i class="fui-list-columned"></i>
+                            </a>
+                        </li>
+                        <li class="seamless">
+                            <a href="#profit"  data-toggle="tab" class="btn btn-success" style="border: 0px;margin: 0px;">
+                                <i class="fui-list-numbered"></i>
+                            </a>
+                        </li>
+                        <li class="seamless">
+                            <a href="#competition"  data-toggle="tab" class="btn btn-success" style="border: 0px;margin: 0px;">
+                                <i class="fui-list-small-thumbnails"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 侧边栏内容 -->
+                <div class="slide-content tab-content">
+                    <!-- 功能栏一 营销辅助 -->
+                    <div class="tab-pane fade in active" id="marketing">
+                        <ul id="marketing-tab" class="nav nav-tabs" role="tablist" id="marketing_menu">
+                            <li class="active"><a href="#hotel-sentiment" data-toggle="tab">酒店情感</a></li>
+                            <li><a href="#hotel-comparison" data-toggle="tab">酒店对比</a></li>
+                            <li><a href="#customer-map" data-toggle="tab">客源地图</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- 酒店情感 -->
+                            <div class="tab-pane fade in active" id="hotel-sentiment">
+                                <div id="sentiment-table"></div>
+                                <div id="word-cloud"></div>
+                                <div id="review-rate"></div>
+                            </div>
+                            <!-- 酒店对比 -->
+                            <div class="tab-pane fade" id="hotel-comparison">
+                                    <div id="comparison_charts">
+                                        
+                                    </div>
+                                    <p>
+                                        <div id="comparison_buttons" class="btn-group">
+                                            <button type="button" class="btn btn-primary btn-lg" id="btn_compare">确定查询</button>
+                                            <button type="button" class="btn btn-primary btn-lg" id="btn_clearSelected">清除选中</button>
+                                        </div>
+                                    </p>
+                            </div>
+                            <!-- 客源地图 -->
+                            <div class="tab-pane fade" id="customer-map">
+                                <div class="form-group"  style="padding-left:30px;">
+                                    <p>
+                                        <div class="input-group input-daterange">
+                                            <div class="input-group">
+                                                <label for="input_originDate">起始时间:</label>
+                                                <input type="text" class="form-control" id ="input_originDate">
+                                            </div> <!-- /input-group -->
+                                            <div class="input-group">
+                                                <label for="input_endDate">结束时间:</label>
+                                                <input type="text" class="form-control" id ="input_endDate">
+                                            </div>
+                                        </div>
+                                    </p>
+                                    <p>
+                                        <div class="input-group">
+                                            <label for="input_buffer">输入距离:</label>
+                                            <input type="text" class="form-control" id ="input_buffer">
+                                        </div><!-- /input-group -->
+                                    </p>
+                                    <p>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary btn-lg" id="btn_customerMap">确定查询</button>
+                                        </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 功能栏二 收益管理-->
+                    <div class="tab-pane fade" id="profit">
+                        
+                        <ul id="profit-tab" class="nav nav-tabs" role="tablist" id="profit_menu">
+                            <li class="active"><a href="#hotel-praisecontrol" data-toggle="tab">价格监控</a></li>
+                            <li><a href="#history-trend" data-toggle="tab">历史趋势</a></li>
+                            <li><a href="#book-map" data-toggle="tab">订房热度</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- 价格监控 -->
+                            <div class="tab-pane fade in active" id="hotel-praisecontrol">
+                                    <div id="praisecontral_charts">
+
+                                    </div>
+                                    <p>
+                                    <div id="parisecontrol_buttons" class="btn-group">
+                                        <button type="button" class="btn btn-primary btn-lg" id="btn_compare_parisecontrol">确定查询</button>
+                                        <button type="button" class="btn btn-primary btn-lg" id="btn_clearSelected_praisecontrol">清除选中</button>
+                                    </div>
+                                    </p>
+                            </div>
+                            <!-- 历史趋势 -->
+                            <div class="tab-pane fade" id="history-trend">
+                                <div class="comparison-chart" id="trendChart">
+                                </div>
+                            </div>
+                            <!-- 订房热度 -->
+                            <div class="tab-pane fade" id="book-map">
+                                <div class="form-group"  style="padding-left:30px;">
+                                    <p>
+                                        <div class="input-group">
+                                            <label for="input_distant">输入距离:</label>
+                                            <input type="text" class="form-control" id ="input_distant">
+                                        </div><!-- /input-group -->
+                                    </p>
+                                    <p>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary btn-lg" id="btn_hexagon">确定查询</button>
+                                            <button type="button" class="btn btn-primary btn-lg" id="btn_clearHexagon">清除图层</button>
+                                        </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 功能栏三 竞业分析-->
+                    <div class="tab-pane fade" id="competition">
+                        <ul class="nav nav-tabs" role="tablist" id="competition_menu">
+                            <li class="active"><a href="#service-cover" data-toggle="tab">服务覆盖</a></li>
+                            <li><a href="#city-sentiment" data-toggle="tab">城市情感</a></li>
+                            <li><a href="#sight-map" data-toggle="tab">景点热度</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="service-cover">
+                                <div style="width: 33%; float: left;height: 46px"><button type="button" class="btn btn-info" id="linjinfenxi" style="width: 100%;height: 100%">邻近设施</button></div>
+                                <div style="width: 33%; float: left;height: 46px"><button type="button" class="btn btn-info" id="zuiyuansheshi" style="width: 100%;height: 100%">最远设施</button></div>
+                                <div style="width: 33%; float: left;height: 46px"><button type="button" class="btn btn-info" id="qingchutuceng" style="width: 100%;height: 100%">清除图层</button></div>
+                                <div style="clear:both;"></div>
+                                <div id="zhoubiansheshi" style="height:300px"></div>
+                                <div id="zuiyuanjvli" style="height:300px"></div>
+                            </div>
+                            <div class="tab-pane fade" id="city-sentiment">
+
+                            </div>
+                            <div class="tab-pane fade" id="sight-map">
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper" style="padding: 0px;">
+                <div class="container-fluid">
+                    <div class="row"  id="fullHeight">
+                        <div class="col-lg-12"  style="height: 100%;padding: 0px;">
+                            <div id="search-box">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button">Go!</button>
+                                        </span>
+                                    </div><!-- /input-group -->
+                                </div><!-- /.form-group -->
+                            </div>
+                            <div class="form-group col-lg-6" id="tag-box">
+                                <div class="input-group tagsinput-primary">
+                                    <input name="tagsinput-01" id ="taginput" data-role="tagsinput" class="tagsinput typeahead-only " value="" />
+                                </div><!-- /input-group -->
+                            </div>
+                            <div id="map" style="height: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 评论模态框（Modal） -->
+            <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" 
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"  aria-hidden="false"></button>
+                            <h4 class="modal-title" id="commentModalLabel">
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="list-group" id="comment_list">
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <ul class="pagination" id="page_list">
+                            </ul>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- 地图模态框（Modal） -->
+            <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div id="customerMap"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- /#page-content-wrapper -->
+        </div>
+    </body>
+</html>
+<script src="../lib/jquery-1.11.2.min.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="../lib/BootSideMenu.js"></script>
+<script type="text/javascript" src="../js/dojiconfig.js"></script>
+<script type="text/javascript" src="../lib/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap-datepicker/bootstrap-datepicker.zh-CN.js"></script>
+<script type="text/javascript" src="http://120.27.93.15:8080/arcgis_js_api/library/3.9/3.9/init.js"></script>
+<script type="text/javascript" src="../lib/tmpl.js"></script>
+<script type="text/javascript" src="../lib/echarts.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/setting.js"></script>
+<script type="text/javascript" src="../js/index/options.js"></script>
+<script type="text/javascript" src="../lib/typeahead.js/dist/bloodhound.js"></script>
+<script type="text/javascript" src="../js/taginput.js"></script>
+<script type="text/javascript" src="../js/index/main.js"></script>
+<script type="text/html" id="comparison_temp">
+    <div class="comparison-chart" id="<%=hotel_name%>">
+    </div>
+</script>
