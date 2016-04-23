@@ -131,15 +131,17 @@
                         <div class="tab-content">
                             <!-- 价格监控 -->
                             <div class="tab-pane fade in active" id="hotel-praisecontrol">
-                                    <div id="praisecontral_charts">
+                                <div id="praisecontral_charts">
 
-                                    </div>
-                                    <p>
-                                    <div id="parisecontrol_buttons" class="btn-group">
-                                        <button type="button" class="btn btn-primary btn-lg" id="btn_compare_parisecontrol">确定查询</button>
-                                        <button type="button" class="btn btn-primary btn-lg" id="btn_clearSelected_praisecontrol">清除选中</button>
-                                    </div>
-                                    </p>
+                                </div>
+                                <p>
+                                <div id="parisecontrol_buttons" class="btn-group">
+
+                                    <button type="button" class="btn btn-primary btn-lg" id="btn_compare_parisecontrol">房价变化</button>
+                                    <button type="button" class="btn btn-primary btn-lg" id="btn_compare_roomnum">剩余房数%</button>
+                                    <button type="button" class="btn btn-primary btn-lg" id="btn_clearSelected_praisecontrol">清除选中</button>
+                                </div>
+                                </p>
                             </div>
                             <!-- 历史趋势 -->
                             <div class="tab-pane fade" id="history-trend">
@@ -277,5 +279,9 @@
 <script type="text/javascript" src="../js/index/main.js"></script>
 <script type="text/html" id="comparison_temp">
     <div class="comparison-chart" id="<%=hotel_name%>">
+    </div>
+</script>
+<script type="text/html" id="praisecontrol_temp">
+    <div class="praisecontral_charts" id="<%=hotel_name_praisecontrol%>">
     </div>
 </script>
