@@ -69,7 +69,7 @@
                         <ul id="marketing-tab" class="nav nav-tabs" role="tablist" id="marketing_menu">
                             <li class="active"><a href="#hotel-sentiment" data-toggle="tab">酒店情感</a></li>
                             <li><a href="#hotel-comparison" data-toggle="tab">酒店对比</a></li>
-                            <li><a href="#customer-map" data-toggle="tab">客源地图</a></li>
+                            <li><a href="#customer-map" data-toggle="tab">用户画像</a></li>
                         </ul>
                         <div class="tab-content">
                             <!-- 酒店情感 -->
@@ -85,14 +85,25 @@
                                     </div>
                                     <p>
                                         <div id="comparison_buttons" class="btn-group">
-                                            <button type="button" class="btn btn-primary btn-lg" id="btn_compare">确定查询</button>
-                                            <button type="button" class="btn btn-primary btn-lg" id="btn_clearSelected">清除选中</button>
+                                            <button type="button" class="btn btn-primary btn-lg btn-onehalf" id="btn_compare">确定查询</button>
+                                            <button type="button" class="btn btn-primary btn-lg btn-onehalf" id="btn_clearSelected">清除选中</button>
                                         </div>
                                     </p>
                             </div>
                             <!-- 客源地图 -->
                             <div class="tab-pane fade" id="customer-map">
                                 <div class="form-group"  style="padding-left:30px;">
+                                    <p>
+                                        <div class="input-group">
+                                            <label for="input_buffer">输入距离:</label>
+                                            <input type="text" class="form-control" id ="input_buffer">
+                                        </div><!-- /input-group -->
+                                    </p>
+                                    <p>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary" id="btn_generateBuffer">生成查询范围</button>
+                                        </div>
+                                    </p>
                                     <p>
                                         <div class="input-group input-daterange">
                                             <div class="input-group">
@@ -106,14 +117,8 @@
                                         </div>
                                     </p>
                                     <p>
-                                        <div class="input-group">
-                                            <label for="input_buffer">输入距离:</label>
-                                            <input type="text" class="form-control" id ="input_buffer">
-                                        </div><!-- /input-group -->
-                                    </p>
-                                    <p>
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-primary btn-lg" id="btn_customerMap">确定查询</button>
+                                            <button type="button" class="btn btn-primary btn-lg" id="btn_openCustomerModel">确定查询</button>
                                         </div>
                                     </p>
                                 </div>
@@ -151,14 +156,15 @@
                                 <div class="form-group"  style="padding-left:30px;">
                                     <p>
                                         <div class="input-group">
-                                            <label for="input_distant">输入距离:</label>
+                                            <label for="input_distant">输入查询距离:</label>
                                             <input type="text" class="form-control" id ="input_distant">
                                         </div><!-- /input-group -->
                                     </p>
                                     <p>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-primary btn-lg" id="btn_hexagon">确定查询</button>
-                                            <button type="button" class="btn btn-primary btn-lg" id="btn_clearHexagon">清除图层</button>
+                                        <div class="btn-group" id="hexagon_buttons">
+                                            <button type="button" class="btn btn-primary btn-lg btn-third" id="btn_drawTargetArea">绘制查询区域</button>
+                                            <button type="button" class="btn btn-primary btn-lg btn-third" id="btn_hexagon">确定查询</button>
+                                            <button type="button" class="btn btn-primary btn-lg btn-third" id="btn_clearHexagon">清除图层</button>
                                         </div>
                                     </p>
                                 </div>
@@ -239,15 +245,21 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
-            <!-- 地图模态框（Modal） -->
+            <!-- 客源地图模态框（Modal） -->
             <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" id="customer_dialog">
+                    
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- 订房热度模态框（Modal） -->
+            <div class="modal fade" id="bookMapModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div id="customerMap"></div>
+                                        <div class="progress"><div id="bookProgressBar" class="progress-bar" style="width: 5%;"></div></div>
                                     </div>
                                 </div>
                             </div>
@@ -255,7 +267,6 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
-            <!-- /#page-content-wrapper -->
         </div>
     </body>
 </html>
@@ -278,4 +289,38 @@
 <script type="text/html" id="comparison_temp">
     <div class="comparison-chart" id="<%=hotel_name%>">
     </div>
+</script>
+<script type="text/html" id="customerProgress_temp">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12" id="cusMap_container">
+                        <div class="progress"><div id="cusProgressBar" class="progress-bar" style="width: 5%;"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal-content -->
+</script>
+<script type="text/html" id="customerMap_temp">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12" id="cusMap_container">
+                        <div id='customerMap'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-lg" id="btn_customerMap">客源地图</button>
+                <button type="button" class="btn btn-primary btn-lg" id="btn_customerInfo">客源信息</button>
+                <button type="button" class="btn btn-primary btn-lg" id="btn_customerTrace">客源轨迹</button>
+            </div>
+        </div>
+    </div>
+    
 </script>

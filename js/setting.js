@@ -1,5 +1,5 @@
-﻿//var domain = "http://192.168.1.123:5000";
-var domain = "http://192.168.1.124:5000";
+﻿var domain = "http://192.168.1.123:5000";
+//var domain = "http://192.168.1.124:5000";
 //评论类型数获取
 var getCommTypeNum = "/ugc.hotel/rest/v100/hotel/get/CommTypeNum";
 var getViewpoint = "/ugc.hotel/rest/v100/hotel/get/viewpoint";
@@ -9,7 +9,9 @@ var getWeiboCome = "/ugc.hotel/rest/v100/weibo/get/nearby_timeline/statics";
 var getArroudFacility = "/ugc.hotel/rest/v100/map/get/aroundfacilities";
 var getMaxDistance = "/ugc.hotel/rest/v100/map/get/maxdistance";
 var getBedpraise = "/ugc.hotel/rest/v100/map/get/hotelbedinfo";
+var getWeiboTrace = "/ugc.hotel/rest/v100/weibo/get/user_trace";
 
 var serverDomain = "http://192.168.1.123:6080";
 var gpUrl = '/arcgis/rest/services/GP/Hexagon/GPServer/Hexagon';
-var featureUrl = "/arcgis/rest/services/hotel_location/FeatureServer/0";
+var hotelUrl = "/arcgis/rest/services/hotel_location/FeatureServer/0";
+var streetUrl = "/arcgis/rest/services/NJRoad/MapServer";

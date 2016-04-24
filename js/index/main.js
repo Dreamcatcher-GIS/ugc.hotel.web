@@ -5,10 +5,12 @@
             "esri/Color",
             "esri",
             "esri/map",
+            "esri/toolbars/draw",
             "tdtlib/TDTVecLayer",
             "esri/geometry/Point",
             "esri/geometry/Polyline",
             "esri/geometry/Circle",
+            "esri/layers/ArcGISDynamicMapServiceLayer",
             "esri/layers/FeatureLayer",
             "esri/SpatialReference",
             "esri/renderers/ClassBreaksRenderer",
@@ -21,6 +23,8 @@
             "esri/symbols/SimpleLineSymbol",
             "esri/symbols/SimpleFillSymbol",
             "esri/tasks/Geoprocessor",
+            "esri/renderers/SimpleRenderer",
+            "esri/tasks/query",
             "dojo/domReady!"
         ],
         function (
@@ -28,10 +32,12 @@
             Color,
             esri,
             Map,
+            Draw,
             TDTVecLayer,
             Point,
             Polyline,
             Circle,
+            ArcGISDynamicMapServiceLayer,
             FeatureLayer,
             SpatialReference,
             ClassBreaksRenderer,
@@ -43,7 +49,9 @@
             SimpleMarkerSymbol,
             SimpleLineSymbol,
             SimpleFillSymbol,
-            Geoprocessor
+            Geoprocessor,
+            SimpleRenderer,
+            Query
         ) {
             // 地图
             var map;
@@ -54,9 +62,14 @@
 
             var gf;
 
-            var featureMap, graphicsLayer;
+            var hotelLayer, hexagonLayer,streetLayer;
 
-            var hotel;
+            var hotel = null;
+
+            var toolbar;
+
+            // 被选择的要素
+            var selectedFeatures=null;
 
             // 模式标识,指示当前页面打开的功能
             var MODE_FLAG;
@@ -106,14 +119,28 @@
                 // 添加天地图底图
                 var imgMap = new TDTVecLayer();
                 map.addLayer(imgMap);
-                
-                featureMap = new FeatureLayer(serverDomain + featureUrl, {
+                // 酒店图层
+                hotelLayer = new FeatureLayer(serverDomain + hotelUrl, {
                     mode: FeatureLayer.MODE_SNAPSHOT,
                     outFields: ["*"],
                 });
+                // 酒店符号
+                var hotelSymbol = new SimpleMarkerSymbol(
+                    SimpleMarkerSymbol.STYLE_CIRCLE,
+                    12,
+                    new SimpleLineSymbol(
+                    SimpleLineSymbol.STYLE_NULL,
+                    new Color([247, 34, 101, 0.9]),
+                    1
+                    ),
+                    new Color([207, 34, 171, 0.5])
+                );
+                hotelLayer.setRenderer(new SimpleRenderer(hotelSymbol));
 
-                map.addLayer(featureMap);
-                graphicsLayer = new GraphicsLayer();
+                // 蜂窝多变形数据存放图层
+                hexagonLayer = new GraphicsLayer();
+
+                // 设置图层的渲染模式为分类渲染
                 var symbol = new SimpleFillSymbol();
                 symbol.setColor(new Color([150, 150, 150, 0.8]));
                 var renderer = new ClassBreaksRenderer(symbol, "count_");
@@ -125,17 +152,20 @@
                 renderer.addBreak(117, 296, new SimpleFillSymbol().setColor(new Color([255, 110, 0, 0.8])));
                 renderer.addBreak(297, 516, new SimpleFillSymbol().setColor(new Color([255, 72, 0, 0.8])));
                 renderer.addBreak(517, Infinity, new SimpleFillSymbol().setColor(new Color([255, 0, 0, 0.8])));
-                graphicsLayer.setRenderer(renderer);
-                map.addLayer(graphicsLayer);
-                gl = new GraphicsLayer({id:"pointLayer"});
-                map.addLayer(gl);
+                hexagonLayer.setRenderer(renderer);
 
+                gl = new GraphicsLayer({ id: "pointLayer" });
+                map.addLayer(gl);
                 gf = new GraphicsLayer({id:"FillLayer"});
                 map.addLayer(gf);
 
-                var pt = new Point(103.847, 36.0473);
-                map.centerAndZoom(pt, 3);
-                connect.connect(featureMap, "onClick", graphicOnClick);
+                var pt = new Point(118.79100, 32.038500);
+                // 添加酒店要素图层
+                map.addLayer(hotelLayer);
+                // 蜂窝六边形图层
+                map.addLayer(hexagonLayer);
+                map.centerAndZoom(pt, 9);
+                connect.connect(hotelLayer, "onClick", graphicOnClick);
             })();
 
             /////////////
@@ -144,30 +174,36 @@
                 // 设置页面标识
                 var flag = getFlag(GetArgsFromHref(window.location.href, "mode"));
                 setModeFlag(flag);
-                // 输入提示
-                //var states = new Bloodhound({
-                //    datumTokenizer: function (d) { return Bloodhound.tokenizers.whitespace(d.word); },
-                //    queryTokenizer: Bloodhound.tokenizers.whitespace,
-                //    limit: 4,
-                //    local: [
-                //      { word: "Alabama" },
-                //      { word: "Alaska" },
-                //      { word: "Arizona" },
-                //      { word: "Arkansas" },
-                //      { word: "California" },
-                //      { word: "Colorado" }
-                //    ]
-                //});
-                //states.initialize();
-                //$('input.typeahead-only').typeahead(null, {
-                //    name: 'states',
-                //    displayKey: 'word',
-                //    source: states.ttAdapter()
-                //});
+                // 创建绘图器
+                createToolbar(map);
+                
             })();
 
-
+            /**
+	         * 创建绘制工具
+	         */
+            function createToolbar(themap) {
+                toolbar = new Draw(themap);
+                toolbar.on("draw-end", drawEnd);
+            }
             
+            /**
+	         * 几何绘制完成事件
+	         */
+            function drawEnd(evt) {
+                // 关闭绘制
+                toolbar.deactivate();
+                var symbol = new SimpleFillSymbol();;
+                map.showZoomSlider();
+                var graphic = new Graphic(evt.geometry, symbol);
+                hexagonLayer.add(graphic);
+                // 根据绘制区域查询hotelLayer,将范围内的要素存放到全局变量selectedFeatures中
+                var query = new Query();
+                query.geometry = evt.geometry;
+                hotelLayer.queryFeatures(query, function(response) {
+                    selectedFeatures = response.features;
+                });
+            }
 
             /**
              * 几何点击事件：根据标识触发行为
@@ -185,6 +221,9 @@
                 }
             }
 
+            /**
+             * 设置历史趋势图表
+             */
             function setTrendChart() {
                 var myChart = echarts.init(document.getElementById("trendChart"));
                 myChart.setOption(treandChart_option);
@@ -263,7 +302,6 @@
                     },
                     error: function (errorMsg) {
                         console.log(errorMsg);
-                        alert("你输入的值有误,请输入完整参数或者重试");
                     }
                 });
             }
@@ -298,7 +336,6 @@
                     },
                     error: function (errorMsg) {
                         console.log(errorMsg);
-                        alert("你输入的值有误,请输入完整参数或者重试");
                     }
                 });
             }
@@ -315,7 +352,6 @@
                     dataType: "json",
                     timeout: 5000,
                     success: function (result) {
-
                         for (var key in result) {
                             if (key<60) {
                                 maxdistance_option["xAxis"]["data"].push(result[key][0][0]);
@@ -430,6 +466,8 @@
             * @param   range       int   查询范围
             */
             function setCustomerMap(starttime, endtime, range) {
+                var progressDiv = document.getElementById("cusProgressBar");
+                var progBarEnd = false;
                 var paramStr = "?lat=" + hotel.geometry.y + "&lng=" + hotel.geometry.x + "&starttime=" + starttime + "&endtime=" + endtime + "&range=" + range;
                 $.ajax({
                     type: "get",
@@ -438,42 +476,132 @@
                     dataType: "json",
                     timeout: 100000,
                     success: function (result) {
-                        traceMapOption['options'] = [];
-                        traceMapOption['timeline']['data'] = [];
-                        for (year in result["city_counter"]) {
-                            var annualMapOption = deepClone(mapOption);
-                            annualMapOption['title']['text'] = hotel.attributes["hotel_name"];
-                            traceMapOption['timeline']['data'].push(year);
-                            for (var item in result["city_counter"][year]) {
-                                var line = new Array();
-                                // 起点
-                                var start = {
-                                    'name': hotel.attributes["hotel_name"],
-                                    'geoCoord': [hotel.geometry.x, hotel.geometry.y]
-                                };
-                                // 终点
-                                console.log(result["city_location"][item]);
-                                var end = { 
-                                    'name': item, 
-                                    'geoCoord': [result["city_location"][item]["x"], result["city_location"][item]["y"]],
-                                    'value': result["city_counter"][year][item]
-                                };
-                                line.push(start);
-                                line.push(end);
-                                annualMapOption['series'][0]['markLine']['data'].push(line);
-                                annualMapOption['series'][0]['markPoint']['data'].push(end);
+                        console.log("获取数据");
+                        progressDiv.style.cssText = 'width:100%;';
+                        progBarEnd = true;
+                        // 两秒后加载地图
+                        setTimeout(function() {
+                            // 设置模态框内容为客源地图模态框
+                            document.getElementById("customer_dialog").innerHTML = document.getElementById("customerMap_temp").innerHTML;
+                            traceMapOption['options'] = [];
+                            traceMapOption['timeline']['data'] = [];
+                            for (year in result["city_counter"]) {
+                                var annualMapOption = deepClone(mapOption);
+                                annualMapOption['title']['text'] = hotel.attributes["hotel_name"];
+                                traceMapOption['timeline']['data'].push(year);
+                                for (var item in result["city_counter"][year]) {
+                                    var line = new Array();
+                                    // 起点
+                                    var start = {
+                                        'name': hotel.attributes["hotel_name"],
+                                        'geoCoord': [hotel.geometry.x, hotel.geometry.y]
+                                    };
+                                    var end = {
+                                        'name': item,
+                                        'geoCoord': [result["city_location"][item]["x"], result["city_location"][item]["y"]],
+                                        'value': result["city_counter"][year][item]
+                                    };
+                                    line.push(start);
+                                    line.push(end);
+                                    annualMapOption['series'][0]['markLine']['data'].push(line);
+                                    annualMapOption['series'][0]['markPoint']['data'].push(end);
+                                }
+                                traceMapOption['options'].push(annualMapOption);
                             }
-                            traceMapOption['options'].push(annualMapOption);
-                        }
-                        var myChart = echarts.init(document.getElementById("customerMap"));
-                        myChart.setOption(traceMapOption);
+                            var myChart = echarts.init(document.getElementById("customerMap"));
+                            myChart.setOption(traceMapOption);
+
+                            // 按钮-设置用户画像
+                            $("#btn_customerMap").click(function () {
+                                document.getElementById("cusMap_container").innerHTML = "<div id='customerMap'></div>";
+                                echarts.init(document.getElementById("customerMap")).setOption(traceMapOption);
+                            });
+                            // 按钮-用户信息
+                            $("#btn_customerInfo").click(function () {
+                                genderPie_option["series"][0]["data"] = [];
+                                document.getElementById("cusMap_container").innerHTML = "<div id='genderPie'></div>";
+                                var genderCounter = {"male":0,"female":0}
+                                for (var i in result["weibo_info"]) {
+                                    if (result["weibo_info"][i]["user"]["gender"] == "m")
+                                        genderCounter["male"]++;
+                                    else
+                                        genderCounter["female"]++;
+                                }
+                                genderPie_option["series"][0]["data"].push({ "value": genderCounter["male"], "name": "男" });
+                                genderPie_option["series"][0]["data"].push({ "value": genderCounter["female"], "name": "女" });
+                                echarts.init(document.getElementById("genderPie")).setOption(genderPie_option);
+                            });
+                            // 按钮-用户轨迹
+                            $("#btn_customerTrace").click(function () {
+                                // 设置模态框内容为进度条
+                                document.getElementById("customer_dialog").innerHTML = document.getElementById("customerProgress_temp").innerHTML;
+                                var progBarEnd1 = false;
+                                var progressDiv1 = document.getElementById("cusProgressBar");
+                                // 取出id作为字典的key（去重）
+                                var idDict = {};
+                                for (var i in result["weibo_info"]) {
+                                    idDict[result["weibo_info"][i]["user"]["id"]] = null;
+                                }
+                                // id放置到idArray中
+                                var idArray = [];
+                                for (var key in idDict) {
+                                    idArray.push(key);
+                                }
+                                var paramStr1 = "?id=" + idArray.join();
+                                $.ajax({
+                                    type: "get",
+                                    async: true, // 异步
+                                    url: domain + getWeiboTrace + paramStr1,
+                                    dataType: "json",
+                                    timeout: 100000,
+                                    success: function (result1) {
+                                        progressDiv1.style.cssText = 'width:100%;';
+                                        progBarEnd1 = true;
+                                        setTimeout(function() {
+                                            // 设置模态框内容为客源地图模态框
+                                            document.getElementById("customer_dialog").innerHTML = document.getElementById("customerMap_temp").innerHTML;
+                                            var annualMapOption1 = deepClone(mapOption);
+                                            annualMapOption1["series"][0]["mapType"] = 'world';
+                                            // 设置线
+                                            for (var x in result1["line"]) {
+                                                annualMapOption1['series'][0]['markLine']['data'].push(result1["line"][x]);
+                                            }
+                                            // 设置点
+                                            for (var y in result1["point"]) {
+                                                annualMapOption1['series'][0]['markPoint']['data'].push(result1["point"][y]);
+                                            }
+                                            echarts.init(document.getElementById("customerMap")).setOption(annualMapOption1);
+                                        },1500);
+                                    },
+                                    error: function (errorMsg) {
+                                        console.log(errorMsg);
+                                        alert("你输入的值有误,请输入完整参数或者重试");
+                                    }
+                                });
+                                setTimeout(function () {
+                                    if (!progBarEnd1) {
+                                        progressDiv1.style.cssText = 'width:50%;';
+                                        setTimeout(function () { if (!progBarEnd1) progressDiv1.style.cssText = 'width:70%;'; }, 2000);
+                                    }
+                                }, 2000);
+                            });
+
+                        },1500);
                     },
                     error: function (errorMsg) {
                         console.log(errorMsg);
                         alert("你输入的值有误,请输入完整参数或者重试");
                     }
                 });
+                setTimeout(function() {
+                     if (!progBarEnd) {
+                         progressDiv.style.cssText = 'width:50%;';
+                         setTimeout(function () { if (!progBarEnd) progressDiv.style.cssText = 'width:70%;'; }, 2000);
+                     }
+                }, 2000);
+                    
             }
+            
 
 
             /**
@@ -524,45 +652,54 @@
                 myChart.setOption(maxdistance_option);
             }
 
-            /**
-            * 加载图表
-            */
-            //function resetHotelSentimentOption() {
-            //    loadReviewPie('review-rate');
-            //    loadWordCloud('word-cloud');
-            //    loadSentimentChart('sentiment-table');
-            //}
-
             
 
             /**
             * 生成蜂窝六边形
             */
             function executeHexagonGp(width) {
+                if (selectedFeatures == null) {
+                    alert("请绘制查询区域");
+                    return;
+                }
+                // 进度条
+                var progressDiv = document.getElementById("bookProgressBar");
+                progressDiv.style.cssText = 'width:5%;';
+                $('#bookMapModal').modal('show');
+                var progBarEnd = false;
                 gp = new Geoprocessor(serverDomain + gpUrl);
                 gp.setOutSpatialReference({
                     wkid: 4326
                 });
                 var featureset = new esri.tasks.FeatureSet();
-                featureset.features = featureMap.graphics;
+                // 设置执行要素为选中的要素
+                featureset.features = selectedFeatures;
                 featureset.spatialReference = new esri.SpatialReference({ wkid: 102100 });
                 var parms = {
                     "Feature_Set": featureset,
                     "Width": width
                 };
-                gp.submitJob(parms, jobResult);
+                // 脚本执行完成时回调
+                gp.submitJob(parms, function (result) {
+                    progBarEnd = true;
+                    progressDiv.style.cssText = 'width:100%;';
+                    setTimeout(function () {
+                        $('#bookMapModal').modal('hide');
+                        var jobId = result.jobId;
+                        var status = result.jobStatus;
+                        if (status === esri.tasks.JobInfo.STATUS_SUCCEEDED) {
+                            gp.getResultData(jobId, "Result_Hexagon", addResults);
+                        }
+                    }, 2000);
+                });
+                setTimeout(function () {
+                    if (!progBarEnd) {
+                        progressDiv.style.cssText = 'width:50%;';
+                        setTimeout(function () { if (!progBarEnd) progressDiv.style.cssText = 'width:70%;'; }, 12000);
+                    }
+                }, 12000);
             }
-            /**
-            * 脚本执行完成时回调
-            */
-            function jobResult(result) {
-                console.log(result);
-                var jobId = result.jobId;
-                var status = result.jobStatus;
-                if (status === esri.tasks.JobInfo.STATUS_SUCCEEDED) {
-                    gp.getResultData(jobId, "Result_Hexagon", addResults);
-                }
-            }
+
             /**
             * 获取到该数据时回调
             */
@@ -573,9 +710,9 @@
                 polySymbolRed.setOutline(new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([0, 0, 0, 0.5]), 1));
                 polySymbolRed.setColor(new dojo.Color([255, 57, 0, 0.5]));
                 for (var i = 0, length = features.length; i != length; ++i) {
-                    graphicsLayer.add(features[i]);
+                    hexagonLayer.add(features[i]);
                 }
-                map.setExtent(GraphicsUtils.graphicsExtent(graphicsLayer.graphics));
+                map.setExtent(GraphicsUtils.graphicsExtent(hexagonLayer.graphics));
             }
 
             /**
@@ -594,7 +731,7 @@
                     default:
                         infotemplate.setContent("<b>评论数</b>:${count_}");
                 }
-                featureMap.setInfoTemplate(infotemplate);
+                hotelLayer.setInfoTemplate(infotemplate);
             }
 
             window.markerClick = function (e) {
@@ -616,7 +753,7 @@
                         return "HOTEL_SENTIMENT";
                     case "酒店对比":
                         return "HOTEL_COMPARISON";
-                    case "客源地图":
+                    case "用户画像":
                         return "CUSTOMER_COME_FROM";
                     case "价格监控":
                         return "PRICE_MINITOR";
@@ -680,7 +817,7 @@
                         switch (activeTab) {
                             case "酒店情感":
                             case "酒店对比":
-                            case "客源地图":
+                            case "用户画像":
                             case "价格监控":
                             case "历史趋势":
                             case "订房热度":
@@ -699,44 +836,83 @@
                 // 初始化酒店对比输入
                 $('input.tagsinput').tagsinput();
 
-                // 按钮-蜂窝六边形生成
-                $("#btn_hexagon").click(function () {
-                    var width = parseInt(document.getElementById("input_distant").value);
-                    executeHexagonGp(width);
-                });
-                // 按钮-蜂窝六边行清除
-                $("#btn_clearHexagon").click(function () {
-                    graphicsLayer.clear();
-                });
+                
                 // 按钮-比较酒店
                 $("#btn_compare").click(function () {
                     $('#tag-box').hide();
                     var items = $('input.tagsinput').val();
                     setComparisionCharts(items);
                 });
+                
+                // 按钮-清除图表和选中内容
+                $("#btn_clearSelected").click(function () {
+                    $('input.tagsinput').tagsinput('removeAll');
+                    document.getElementById("comparison_charts").innerHTML = "";
+                });
+                
+                // 按钮-生成查询范围
+                $("#btn_generateBuffer").click(function () {
+                    if (hotel == null) {
+                        alert("请先选择酒店");
+                        return;
+                    }
+                    // 获取半径
+                    var radius = parseInt(document.getElementById("input_distant").value);
+                    // 清除图层
+                    gl.clear();
+                    var pt = new Point(hotel.geometry.x, hotel.geometry.y, map.spatialReference);
+                    var symbol = new SimpleFillSymbol().setColor(null).outline.setColor("red");
+                    var circle = new Circle({
+                        center: pt,
+                        geodesic: true,
+                        radius: radius
+                    });
+                    var graphic = new Graphic(circle, symbol);
+                    gl.add(graphic);
+                    map.centerAndZoom(pt, 13);
+                });
+
+                // 按钮-设置用户画像
+                $("#btn_openCustomerModel").click(function () {
+                    var starttime = $('#input_originDate').datepicker('getDate').getTime();
+                    var endtime = $('#input_endDate').datepicker('getDate').getTime();
+                    var range = document.getElementById("input_buffer").value;
+                    // 设置模态框内容为进度条
+                    document.getElementById("customer_dialog").innerHTML = document.getElementById("customerProgress_temp").innerHTML;
+                    $('#mapModal').modal('show');
+                    setCustomerMap(starttime / 1000, endtime / 1000, range);
+                });
+
                 // 按钮-比较酒店周期内价格(价格监控)
                 $("#btn_compare_parisecontrol").click(function () {
                     $('#tag-box').hide();
                     var items = $('input.tagsinput').val();
                     setpraisecontrolCharts(items);
                 });
-                // 按钮-清除图表和选中内容
-                $("#btn_clearSelected").click(function () {
-                    $('input.tagsinput').tagsinput('removeAll');
-                    document.getElementById("comparison_charts").innerHTML = "";
-                });
+
                 // 按钮-清除图表和选中内容(价格监控)
                 $("#btn_clearSelected_praisecontrol").click(function () {
                     $('input.tagsinput').tagsinput('removeAll');
                     document.getElementById("praisecontral_charts").innerHTML = "";
                 });
-                // 按钮-设置客源地图
-                $("#btn_customerMap").click(function () {
-                    var starttime = $('#input_originDate').datepicker('getDate').getTime();
-                    var endtime = $('#input_endDate').datepicker('getDate').getTime();
-                    var range = document.getElementById("input_buffer").value;
-                    $('#mapModal').modal('show');
-                    setCustomerMap(starttime / 1000, endtime / 1000, range);
+
+                // 按钮-绘制查询区域(订房热度)
+                $("#btn_drawTargetArea").click(function () {
+                    hexagonLayer.clear();
+                    // 激活地图绘制
+                    toolbar.activate(Draw.POLYGON);
+                });
+
+                // 按钮-蜂窝六边形生成
+                $("#btn_hexagon").click(function () {
+                    hexagonLayer.clear();
+                    var width = parseInt(document.getElementById("input_distant").value);
+                    executeHexagonGp(width);
+                });
+
+                // 按钮-蜂窝六边行清除
+                $("#btn_clearHexagon").click(function () {
+                    hexagonLayer.clear();
                 });
 
             })();
@@ -955,6 +1131,5 @@
         });
 
     });
-    
 })();
 

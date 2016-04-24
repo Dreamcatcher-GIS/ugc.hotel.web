@@ -210,7 +210,7 @@ var reviewPie_option = {
 var mapOption = {
     backgroundColor: '#1b1b1b',
     title: {
-        text: '生源地图',
+        text: '',
         x: 'center',
         textStyle: {
             color: '#fff'
@@ -561,5 +561,49 @@ praisecontrol_option = {
             stack: '总量',
             data:[100,105,105,105]
         },
+    ]
+};
+
+
+var genderPie_option = {
+    title: {
+        text: '客源性别',
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: "{b} : {c} ({d}%)"
+    },
+    toolbox: {
+        show: false
+    },
+    calculable: true,
+    series: [
+        {
+            name: '半径模式',
+            type: 'pie',
+            radius: [20, 90],
+            roseType: 'radius',
+            width: '40%',
+            max: 40,
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: false
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                },
+                emphasis: {
+                    label: {
+                        show: true
+                    },
+                    labelLine: {
+                        show: true
+                    }
+                }
+            },
+            data: []
+        }
     ]
 };
