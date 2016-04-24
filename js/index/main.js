@@ -353,13 +353,15 @@
                     timeout: 5000,
                     success: function (result) {
                         for (var key in result) {
-                            if (key<60) {
+                            if (key < 60) {
                                 maxdistance_option["xAxis"]["data"].push(result[key][0][0]);
                                 maxdistance_option["series"][0]["data"].push(result[key][1][1]);
                                 maxdistance_option["series"][1]["data"].push(result[key][1][1]);
                                 maxdistance_option["series"][2]["data"].push(result[key][1][1]);
                             }
-                            drwayuan(result[key][0][1][0],result[key][0][1][1],result[key][1][1]);
+                            if (key < 1000) {
+                            drwayuan(result[key][0][1][0], result[key][0][1][1], result[key][1][1]);
+                        }
                         }
                         loadaroundfac('zhoubiansheshi');
                         loadzuiyuanjvli('zuiyuanjvli');
@@ -380,15 +382,27 @@
              * @param banjing
              */
             function drwayuan(hotelX,hotelY,banjing){
-                var pt = new Point(hotelX,hotelY,map.spatialReference);
-                var symbol = new SimpleFillSymbol().setColor(null).outline.setColor("red");
-                var circle = new Circle({
-                    center: pt,
-                    geodesic: true,
-                    radius: banjing
-                });
-                var graphic = new Graphic(circle,symbol);
-                gl.add(graphic);
+                if (hotelX != 118.77807440803) {
+                    if(hotelX != 118.77829690033) {
+                        if (hotelX != 118.79560564853) {
+                            if(hotelX != 118.79535319773) {
+                                if(hotelX != 118.79157998222) {
+                                    if (hotelX != 118.79189629625) {
+                                        var pt = new Point(hotelX, hotelY, map.spatialReference);
+                                        var symbol = new SimpleFillSymbol().setColor(null).outline.setColor("red");
+                                        var circle = new Circle({
+                                            center: pt,
+                                            geodesic: true,
+                                            radius: banjing
+                                        });
+                                        var graphic = new Graphic(circle, symbol);
+                                        gl.add(graphic);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             //点击邻近分析按钮,绘制酒店与周边设施的连线
@@ -843,7 +857,14 @@
                     var items = $('input.tagsinput').val();
                     setComparisionCharts(items);
                 });
-                
+
+                // 按钮-比较酒店各房型剩余房间数(房数监控)
+                $("#btn_compare_roomnum").click(function () {
+                    $('#tag-box').hide();
+                    var items = $('input.tagsinput').val();
+                    setroomnumCharts(items);
+                });
+
                 // 按钮-清除图表和选中内容
                 $("#btn_clearSelected").click(function () {
                     $('input.tagsinput').tagsinput('removeAll');
@@ -918,6 +939,57 @@
             })();
 
             /**
+             *  设置酒店各房型剩余房间数比较图表
+             * @param items  String   酒店名称序列,使用逗号分隔
+             */
+            function setroomnumCharts(items) {
+                $('input.tagsinput').tagsinput('removeAll');
+                // 匿名函数,根据将图表的div容器插入到div中
+                (function () {
+                    var itemList = items.split(',');
+                    var chartsDiv = document.getElementById("praisecontral_charts");
+                    chartsDiv.innerHTML = "";
+                    for (var i = 0; i < itemList.length; i++) {
+                        chartsDiv.innerHTML += tmpl("praisecontrol_temp", { "hotel_name_praisecontrol": itemList[i] });
+                        // 在最后插入一个空容器
+                        if(i==itemList.length-1)
+                            chartsDiv.innerHTML += tmpl("praisecontrol_temp", { "hotel_name_praisecontrol": "nullChart" });
+                    }
+                })();
+                // 请求酒店周期内各个床型的剩余房数，初始化每个图表
+                var paramStr = "?hotel_name=" + items;
+                $.ajax({
+                    type: "get",
+                    async: true, // 异步
+                    url: domain + getroomnum + paramStr,
+                    dataType: "json",
+                    timeout: 5000,
+                    success: function (result) {
+                        for (var key=0;key<(result.length)/2;key++){
+                            praisecontrol_option["xAxis"]["data"] = ['3-31','3-14','3-17','3-19','3-21'];
+                            praisecontrol_option["title"]["text"] = result[2*key];
+                            praisecontrol_option["series"] = [];
+
+                            for (var i = 0;i<5;i++){
+                                praisecontrol_option["series"].push({"name":result[2*key+1][1][i],"type":"line","stack":"总量","data":[]});
+                                for (var j = 0;j<5;j++){
+                                    praisecontrol_option["series"][i]["data"].push(result[2*key+1][i+2][j]);
+                                }
+                            }
+                            var myChart = echarts.init(document.getElementById(result[2*key]));
+                            myChart.setOption(praisecontrol_option);
+
+                        }
+                    },
+                    error: function (errorMsg) {
+                        console.log(errorMsg);
+                        alert("你输入的值有误,请输入完整参数或者重试");
+                    }
+                });
+            }
+
+
+            /**
              *  设置酒店价格监控比较图表
              * @param items  String   酒店名称序列,使用逗号分隔
              */
@@ -929,10 +1001,17 @@
                     var chartsDiv = document.getElementById("praisecontral_charts");
                     chartsDiv.innerHTML = "";
                     for (var i = 0; i < itemList.length; i++) {
+
+                        chartsDiv.innerHTML += tmpl("praisecontrol_temp", { "hotel_name_praisecontrol": itemList[i] });
+                        // 在最后插入一个空容器
+                        if(i==itemList.length-1)
+                            chartsDiv.innerHTML += tmpl("praisecontrol_temp", { "hotel_name_praisecontrol": "nullChart" });
+
                         chartsDiv.innerHTML += tmpl("comparison_temp", { "hotel_name": itemList[i] });
                         // 在最后插入一个空容器
                         if(i==itemList.length-1)
                             chartsDiv.innerHTML += tmpl("comparison_temp", { "hotel_name": "nullChart" });
+
                     }
                 })();
                 // 请求酒店周期内各个床型的价格数据，初始化每个图表
@@ -944,9 +1023,28 @@
                     dataType: "json",
                     timeout: 5000,
                     success: function (result) {
+
+                        for (var key = 0; key<(result.length)/2;key++){
+                            praisecontrol_option["xAxis"]["data"] = [];
+                            praisecontrol_option["title"]["text"] = result[2*key];
+                            praisecontrol_option["series"] = [];
+                            for(var datanum = 0;datanum<result[2*key+1][1].length;datanum++){
+                                praisecontrol_option["xAxis"]["data"].push(result[2*key+1][1][datanum][0]);
+                            }
+                            for(var praiseandroomdata = 0;praiseandroomdata<(result[2*key+1].length)/2;praiseandroomdata++){
+                                praisecontrol_option["series"].push({"name":result[2*key+1][2*praiseandroomdata],"type":"line","stack":"总量","data":[]});
+                                for(var praisedata = 0;praisedata<result[2*key+1][1].length;praisedata++ ){
+                                    praisecontrol_option["series"][praiseandroomdata]["data"].push(parseInt(result[2*key+1][2*praiseandroomdata+1][praisedata][1]))
+                                }
+                            }
+                            var myChart = echarts.init(document.getElementById(result[2*key]));
+                            myChart.setOption(praisecontrol_option);
+                        }
+
                         var hotelInfo = result[i];
                         var myChart = echarts.init(document.getElementById(hotelInfo["hotel_name"]));
                         myChart.setOption(praisecontrol_option);
+
                     },
                     error: function (errorMsg) {
                         console.log(errorMsg);

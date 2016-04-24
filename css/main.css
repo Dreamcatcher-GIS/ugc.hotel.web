@@ -1,11 +1,11 @@
 .slideMenu{
-	position: absolute;
-	width: 48px;
-	height: 100%;
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
+    position: absolute;
+    width: 48px;
+    height: 100%;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
 }
 
 .slide-content {
@@ -63,6 +63,12 @@
 
 }
 
+.praisecontral_charts {
+    height: 200px;
+    width: 100%;
+    background: #ECF0F1;
+}
+
 
 #comparison_buttons {
     position: fixed;
@@ -77,11 +83,16 @@
 }
 
 #btn_compare_parisecontrol {
-    width: 200px;
+
+    width: 133px;
+}
+
+#btn_compare_roomnum {
+    width: 133px;
 }
 
 #btn_clearSelected_praisecontrol {
-    width: 200px;
+    width: 134px;
 }
 
 #customerMap {

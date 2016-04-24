@@ -508,10 +508,12 @@ var treandChart_option = {
 };
 
 
-//酒店价格监控图标
+//酒店价格监控图标和剩余房间数
 praisecontrol_option = {
     title: {
-        text: '酒店价格监控折线图堆叠'
+
+        text: ''
+
     },
     tooltip: {
         trigger: 'axis'
@@ -531,36 +533,15 @@ praisecontrol_option = {
     xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['3-31','4-14','4-17','4-19']
+
+        data: []
+
     },
     yAxis: {
         type: 'value'
     },
     series: [
-        {
-            name:'大床房',
-            type:'line',
-            stack: '总量',
-            data:[221,223,223,225]
-        },
-        {
-            name:'普通客房',
-            type:'line',
-            stack: '总量',
-            data:[152,153,169,152]
-        },
-        {
-            name:'豪华套房',
-            type:'line',
-            stack: '总量',
-            data:[339,339,337,341]
-        },
-        {
-            name:'钟点房',
-            type:'line',
-            stack: '总量',
-            data:[100,105,105,105]
-        },
+
     ]
 };
 

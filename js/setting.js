@@ -10,6 +10,8 @@ var getArroudFacility = "/ugc.hotel/rest/v100/map/get/aroundfacilities";
 var getMaxDistance = "/ugc.hotel/rest/v100/map/get/maxdistance";
 var getBedpraise = "/ugc.hotel/rest/v100/map/get/hotelbedinfo";
 var getWeiboTrace = "/ugc.hotel/rest/v100/weibo/get/user_trace";
+var getroomnum = "/ugc.hotel/rest/v100/map/get/hotelroomnum";
+
 
 var serverDomain = "http://192.168.1.123:6080";
 var gpUrl = '/arcgis/rest/services/GP/Hexagon/GPServer/Hexagon';
