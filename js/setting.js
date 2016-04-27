@@ -1,7 +1,6 @@
-﻿var domain = "http://192.168.1.123:5000";
-//var domain = "http://192.168.1.124:5000";
+﻿var domain = "http://localhost:5000";
 //评论类型数获取
-var getCommTypeNum = "/ugc.hotel/rest/v100/hotel/get/CommTypeNum";
+var getCommTypeNum = "/ugc.hotel/rest/v100/hotel/get/type_score/statics";
 var getViewpoint = "/ugc.hotel/rest/v100/hotel/get/viewpoint";
 var getAdjective = "/ugc.hotel/rest/v100/hotel/get/adjective";
 var getComments = "/ugc.hotel/rest/v100/hotel/get/comments";
@@ -11,9 +10,13 @@ var getMaxDistance = "/ugc.hotel/rest/v100/map/get/maxdistance";
 var getBedpraise = "/ugc.hotel/rest/v100/map/get/hotelbedinfo";
 var getWeiboTrace = "/ugc.hotel/rest/v100/weibo/get/user_trace";
 var getroomnum = "/ugc.hotel/rest/v100/map/get/hotelroomnum";
+var getBaseinfoUrl = "/ugc.hotel/rest/v100/hotel/get/baseinfo";
+var getHotelTrace = "/ugc.hotel/rest/v100/hotel/get/user_trace";
+var getViewpointTuniu = "/ugc.hotel/rest/v100/hotel/get/tuniu/viewpoint";
 
 
-var serverDomain = "http://192.168.1.123:6080";
-var gpUrl = '/arcgis/rest/services/GP/Hexagon/GPServer/Hexagon';
-var hotelUrl = "/arcgis/rest/services/hotel_location/FeatureServer/0";
-var streetUrl = "/arcgis/rest/services/NJRoad/MapServer";
+var serverDomain = "http://localhost:6080";
+var gpUrl = '/arcgis/rest/services/GP/Honeycomb/GPServer/Honeycomb';
+var hotelUrl = "/arcgis/rest/services/NJ_Hotel/FeatureServer/0";
+var streetUrl = "/arcgis/rest/services/NJ_Hotel/FeatureServer/1";
+var sightspotUrl = "/arcgis/rest/services/Sightspot/FeatureServer/0";

@@ -116,3 +116,13 @@
 .btn-onehalf {
     width: 200px;
 }
+
+#sight_buttons {
+    position: fixed;
+    bottom: 0px;
+    left: 48px;
+}
+
+#relatedChart {
+    height: 400px;
+}

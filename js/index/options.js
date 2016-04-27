@@ -369,85 +369,47 @@ var hotelfenbu_option = {
 
 
 //酒店周边设施最远距离一览
-var maxdistance_option = {
+
+var aroundmaxdistanceoption = {
     title: {
-        text: '酒店最远设施一览',
+        text: '酒店周边设施最远距离',
+        x: 'center',
+        y: 0
     },
+
     tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            animation: false
-        },
-        formatter: function (params) {
-            return params[2].name + '<br />' + params[2].value;
-        }
+        formatter: '({c})'
     },
     grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '30%',
-        containLabel: true
+        borderWidth: 0,
+        x: 40,
+        x2: 30,
+        y: 10
     },
-
-    xAxis: {
-        type: 'category',
-        data: [],
-
-        splitLine: {
-            show: false
-        },
-        boundaryGap: false
-    },
-    yAxis: {
+    xAxis:
+    {
         axisLabel: {
-            formatter: function (val) {
-                return val
-            }
-        },
-        splitNumber: 5,
-        splitLine: {
             show: false
-        }
+        },
+        type: 'category',
+        data: []
     },
-    series: [{
-        name: 'L',
-        type: 'line',
-        data: [],
-        lineStyle: {
-            normal: {
-                opacity: 0
-            }
-        },
-        stack: 'confidence-band',
-        symbol: 'none'
-    }, {
-        name: 'U',
-        type: 'line',
-        data: [],
-        lineStyle: {
-            normal: {
-                opacity: 0
-            }
-        },
-        areaStyle: {
-            normal: {
-                color: '#ccc'
-            }
-        },
 
-        symbol: 'none'
-    }, {
-        type: 'line',
-        data: [],
-        hoverAnimation: false,
-        symbolSize: 2,
-        itemStyle: {
-            normal: {
-                color: '#c23531'
-            }
-        },
-        showSymbol: false
-    }]
+    yAxis: [
+        { gridIndex: 0, min: 0, max: 1500 }
+
+    ],
+    series: [
+        {
+            name: 'I',
+            type: 'scatter',
+            xAxisIndex: [0],
+            yAxisIndex: [0],
+            data: [
+            ]
+        }
+
+    ]
 };
 
 
@@ -585,6 +547,66 @@ var genderPie_option = {
                 }
             },
             data: []
+        }
+    ]
+};
+
+
+var relatedChart_option = {
+    title: {
+        x: 'center',
+        text: '',
+    },
+    tooltip: {
+        show: false,
+        trigger: 'item',
+    },
+    toolbox: {
+        show: false
+    },
+    calculable: false,
+    grid: {
+        borderWidth: 0,
+        x: 30,
+        x2: 30,
+        y: 50,
+        y2: 30
+    },
+    xAxis: [
+        {
+            type: 'category',
+            axisLabel: {
+                interval: 0
+            },
+            data: ["大屠杀纪念馆", "夫子庙", "总统府", "鸡鸣寺", "南京博物馆"]
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value'
+        }
+    ],
+    series: [
+        {
+            type: 'bar',
+            itemStyle: {
+                normal: {
+                    barBorderRadius: 5,
+                    color: function (params) {
+                        // build a color map as your need.
+                        var colorList = [
+                          '#FBC1D0', '#B5C334', '#FCCE10', '#E87C25', '#27727B'
+                        ];
+                        return colorList[params.dataIndex];
+                    },
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{b}'
+                    }
+                }
+            },
+            data: [51,45,30,25,10]
         }
     ]
 };

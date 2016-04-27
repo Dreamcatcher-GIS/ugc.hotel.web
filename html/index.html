@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Simple Sidebar - Start Bootstrap Template</title>
+        <meta name="author" content="DreamCatcher-GIS">
+        <title>基于社会感知的酒店竞业市场时空可视化分析</title>
         <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="http://120.27.93.15:8080/arcgis_js_api/library/3.9/3.9/js/esri/css/esri.css">
         <link rel="stylesheet" href="../css/simple-sidebar.css">
@@ -46,17 +46,17 @@
                 <div class="slideMenu">
                     <ul class="nav nav-tabs nav-stacked" id="slideMenu">
                         <li  class="active seamless">
-                            <a href="#marketing"  data-toggle="tab" class="btn btn-success" style="border: 0px;margin: 0px;">
+                            <a href="#marketing"  data-toggle="tab" class="btn btn-success" title="营销辅助" style="border: 0px;margin: 0px;">
                                 <i class="fui-list-columned"></i>
                             </a>
                         </li>
                         <li class="seamless">
-                            <a href="#profit"  data-toggle="tab" class="btn btn-success" style="border: 0px;margin: 0px;">
+                            <a href="#profit"  data-toggle="tab" class="btn btn-success" title="收益管理" style="border: 0px;margin: 0px;">
                                 <i class="fui-list-numbered"></i>
                             </a>
                         </li>
                         <li class="seamless">
-                            <a href="#competition"  data-toggle="tab" class="btn btn-success" style="border: 0px;margin: 0px;">
+                            <a href="#competition"  data-toggle="tab" class="btn btn-success"title="竞业分析"  style="border: 0px;margin: 0px;">
                                 <i class="fui-list-small-thumbnails"></i>
                             </a>
                         </li>
@@ -67,7 +67,7 @@
                     <!-- 功能栏一 营销辅助 -->
                     <div class="tab-pane fade in active" id="marketing">
                         <ul id="marketing-tab" class="nav nav-tabs" role="tablist" id="marketing_menu">
-                            <li class="active"><a href="#hotel-sentiment" data-toggle="tab">酒店情感</a></li>
+                            <li class="active"><a href="#hotel-sentiment" data-toggle="tab">基本信息</a></li>
                             <li><a href="#hotel-comparison" data-toggle="tab">酒店对比</a></li>
                             <li><a href="#customer-map" data-toggle="tab">用户画像</a></li>
                         </ul>
@@ -140,12 +140,12 @@
 
                                 </div>
                                 <p>
-                                <div id="parisecontrol_buttons" class="btn-group">
+                                    <div id="parisecontrol_buttons" class="btn-group">
 
-                                    <button type="button" class="btn btn-primary btn-lg" id="btn_compare_parisecontrol">房价变化</button>
-                                    <button type="button" class="btn btn-primary btn-lg" id="btn_compare_roomnum">剩余房数%</button>
-                                    <button type="button" class="btn btn-primary btn-lg" id="btn_clearSelected_praisecontrol">清除选中</button>
-                                </div>
+                                        <button type="button" class="btn btn-primary btn-lg" id="btn_compare_parisecontrol">房价变化</button>
+                                        <button type="button" class="btn btn-primary btn-lg" id="btn_compare_roomnum">剩余房数</button>
+                                        <button type="button" class="btn btn-primary btn-lg" id="btn_clearSelected_praisecontrol">清除选中</button>
+                                    </div>
                                 </p>
                             </div>
                             <!-- 历史趋势 -->
@@ -177,8 +177,8 @@
                     <div class="tab-pane fade" id="competition">
                         <ul class="nav nav-tabs" role="tablist" id="competition_menu">
                             <li class="active"><a href="#service-cover" data-toggle="tab">服务覆盖</a></li>
-                            <li><a href="#city-sentiment" data-toggle="tab">城市情感</a></li>
-                            <li><a href="#sight-map" data-toggle="tab">景点热度</a></li>
+                            <li><a href="#sight-map" data-toggle="tab">景点关联</a></li>
+                            <!--<li><a href="#city-sentiment" data-toggle="tab">城市情感</a></li>-->
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade in active" id="service-cover">
@@ -189,11 +189,41 @@
                                 <div id="zhoubiansheshi" style="height:300px"></div>
                                 <div id="zuiyuanjvli" style="height:300px"></div>
                             </div>
+                            <div class="tab-pane fade" id="sight-map">
+                                <p>
+                                    <div class="input-group input-daterange"  style="padding-left:30px;">
+                                        <div class="input-group">
+                                            <label for="input_startTime">起始时间:</label>
+                                            <input type="text" class="form-control" id ="input_startTime">
+                                        </div> <!-- /input-group -->
+                                        <div class="input-group">
+                                            <label for="input_endTime">结束时间:</label>
+                                            <input type="text" class="form-control" id ="input_endTime">
+                                        </div>
+                                    </div>
+                                </p>
+                                <p>
+                                    <div class="btn-group" style="padding-left:30px;">
+                                        <button type="button" class="btn btn-success" id="btn_drawConstrainArea">约束区域绘制</button>
+                                    </div>
+                                </p>
+                                <p>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success btn-lg btn-third" id="btn_addWeiboTrace">微博轨迹</button>
+                                        <button type="button" class="btn btn-success btn-lg btn-third" id="btn_addXieChengTrace">携程轨迹</button>
+                                        <button type="button" class="btn btn-success btn-lg btn-third" id="btn_addTuniuTrace">途牛轨迹</button>
+                                    </div>
+                                </p>
+                                
+                                <p>
+                                    <div class="btn-group" id="sight_buttons">
+                                        <button type="button" class="btn btn-primary btn-lg btn-onehalf" id="btn_relatedAnalysis">分析关联</button>
+                                        <button type="button" class="btn btn-primary btn-lg btn-onehalf" id="btn_clearHexagon">清除图层</button>
+                                    </div>
+                                </p>
+                            </div>
                             <div class="tab-pane fade" id="city-sentiment">
 
-                            </div>
-                            <div class="tab-pane fade" id="sight-map">
-                              
                             </div>
                         </div>
                     </div>
@@ -267,6 +297,22 @@
                             </div>
                         </div>
                     </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- 关联分析模态框（Modal） -->
+            <div class="modal fade" id="relatedAnalysisModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" id="customer_dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div id='relatedChart'></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
         </div>
