@@ -307,28 +307,111 @@
             /**
              * 获取数据绘制周边设施中最远距离设施为半径的圆
              */
-            function drawyuan() {
+            function draw_maxdistance_circular() {
                 $.ajax({
                     type: "get",
                     async: true, // 异步
                     url: domain + getMaxDistance,
                     dataType: "json",
-                    timeout: 5000,
+                    timeout: 50000,
                     success: function (result) {
+                        aroundmaxdistanceoption["series"][0]["data"] = [];
+                        aroundmaxdistanceoption["xAxis"]["data"] = []
 
                         for (var key in result) {
-                            if (key < 60) {
-                                maxdistance_option["xAxis"]["data"].push(result[key][0][0]);
-                                maxdistance_option["series"][0]["data"].push(result[key][1][1]);
-                                maxdistance_option["series"][1]["data"].push(result[key][1][1]);
-                                maxdistance_option["series"][2]["data"].push(result[key][1][1]);
+                            if (key < 1500) {
+                                if (result[key][1][1]<=100) {
+                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
+                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
+                                }
                             }
                             if (key < 1000) {
-                            drwayuan(result[key][0][1][0], result[key][0][1][1], result[key][1][1]);
+                                drwa_maxdistance_circular(result[key][0][1][0], result[key][0][1][1], result[key][1][1]);
+                            }
+
                         }
+                        for (var key in result) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>100&&result[key][1][1]<=200) {
+                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
+                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
+                                }
+                            }
+                        }
+                        for (var key in result) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>200&&result[key][1][1]<=300) {
+                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
+                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
+                                }
+                            }
+                        }
+                        for (var key in result) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>300&&result[key][1][1]<=400) {
+                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
+                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
+                                }
+                            }
+                        }
+                        for (var key in result) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>400&&result[key][1][1]<=500) {
+                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
+                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
+                                }
+                            }
+                        }
+                        for (var key in result) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>500&&result[key][1][1]<=600) {
+                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
+                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
+                                }
+                            }
+                        }
+                        for (var key in result) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>600&&result[key][1][1]<=700) {
+                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
+                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
+                                }
+                            }
+                        }
+                        for (var key in result) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>700&&result[key][1][1]<=800) {
+                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
+                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
+                                }
+                            }
+                        }
+                        for (var key in result) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>800&&result[key][1][1]<=900) {
+                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
+                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
+                                }
+                            }
+                        }
+                        for (var key in result) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>900&&result[key][1][1]<=1000) {
+                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
+                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
+                                }
+                            }
+                        }
+                        for (var key in result) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>1000) {
+                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
+                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
+                                }
+                            }
                         }
                         loadaroundfac('zhoubiansheshi');
-                        loadzuiyuanjvli('zuiyuanjvli');
+                        load_maxdistance('zuiyuanjvli');
                         map.centerAndZoom([118.7,32], 11);
                     },
                     error: function (errorMsg) {
@@ -345,7 +428,7 @@
              * @param hotelY
              * @param banjing
              */
-            function drwayuan(hotelX,hotelY,banjing){
+            function drwa_maxdistance_circular(hotelX,hotelY,banjing){
                 if (hotelX != 118.77807440803) {
                     if(hotelX != 118.77829690033) {
                         if (hotelX != 118.79560564853) {
@@ -372,7 +455,7 @@
             //点击邻近分析按钮,绘制酒店与周边设施的连线
             $("#linjinfenxi").click(drawpoint);
             //点击最远设施按钮,绘制以最远设施为半径的范围
-            $("#zuiyuansheshi").click(drawyuan);
+            $("#zuiyuansheshi").click(draw_maxdistance_circular);
             // 按钮-清除周边设施图层
             $("#qingchutuceng").click(function () {
                 gl.clear();
@@ -387,18 +470,17 @@
                     async: true, // 异步
                     url: domain + getArroudFacility,
                     dataType: "json",
-                    timeout: 5000,
+                    timeout: 50000,
                     success: function (result) {
 
                         for (var key in result) {
                             for (var key2 in result[key][1])
                             {
-                                drwaPoint(result[key][1][key2][0],result[key][1][key2][1]);
+                                //drwaPoint(result[key][1][key2][0],result[key][1][key2][1]);
                                 drawLine(result[key][0][0],result[key][0][1],result[key][1][key2][0],result[key][1][key2][1]);
                             }
                         }
-
-                        loadWordCloud(container);
+                        map.centerAndZoom([118.7,32], 11);
                     },
                     error: function (errorMsg) {
                         console.log(errorMsg);
@@ -416,7 +498,20 @@
             function drwaPoint(currentX,currentY){
 
                 var pt = new Point(currentX,currentY,new SpatialReference({wkid:4326}));
-                var symbol = new SimpleMarkerSymbol();
+                var symbol = new SimpleMarkerSymbol({
+                    "color": [255,0,0],
+                    "size": 4,
+                    "angle": -30,
+                    "xoffset": 0,
+                    "yoffset": 0,
+                    "type": "esriSMS",
+                    "style": "esriSMSCircle",
+                    "outline": {
+                        "color": [0,0,0,255],
+                        "width": 1,
+                        "type": "esriSLS",
+                        "style": "esriSLSSolid"}
+                });
                 var graphic = new Graphic(pt,symbol);
                 gl.add(graphic);
                 //map.centerAndZoom(pt, 17);
@@ -431,7 +526,11 @@
              */
             function drawLine(hotelX,hotelY,currentX,currentY){
                 var pt = new Polyline([[hotelX,hotelY],[currentX,currentY]],new SpatialReference({wkid:4326}));
-                var symbol = new SimpleLineSymbol();
+                var symbol = new SimpleLineSymbol(
+                    SimpleLineSymbol.STYLE_DASH,
+                    new Color([138,43,226]),
+                    1
+                );
                 var graphic = new Graphic(pt,symbol);
                 gl.add(graphic);
             }
@@ -533,9 +632,9 @@
              * 加载酒店最远距离设施图表
              * @param container
              */
-            function loadzuiyuanjvli(container){
+            function load_maxdistance(container){
                 var myChart = echarts.init(document.getElementById(container));
-                myChart.setOption(maxdistance_option);
+                myChart.setOption(aroundmaxdistanceoption);
             }
 
             /**
@@ -706,7 +805,6 @@
                                 setModeFlag(flag);
                                 break;
                         }
-
                     });
                 });
 
@@ -734,7 +832,6 @@
                     var items = $('input.tagsinput').val();
                     setpraisecontrolCharts(items);
                 });
-
                 // 按钮-比较酒店各房型剩余房间数(房数监控)
                 $("#btn_compare_roomnum").click(function () {
                     $('#tag-box').hide();
@@ -759,7 +856,6 @@
                     $('#mapModal').modal('show');
                     setCustomerMap(starttime / 1000, endtime / 1000, range);
                 });
-
             })();
 
             /**
@@ -787,7 +883,7 @@
                     async: true, // 异步
                     url: domain + getroomnum + paramStr,
                     dataType: "json",
-                    timeout: 5000,
+                    timeout: 20000,
                     success: function (result) {
                         for (var key=0;key<(result.length)/2;key++){
                             praisecontrol_option["xAxis"]["data"] = ['3-31','3-14','3-17','3-19','3-21'];
@@ -802,7 +898,6 @@
                             }
                             var myChart = echarts.init(document.getElementById(result[2*key]));
                             myChart.setOption(praisecontrol_option);
-
                         }
                     },
                     error: function (errorMsg) {
@@ -830,12 +925,6 @@
                         // 在最后插入一个空容器
                         if(i==itemList.length-1)
                             chartsDiv.innerHTML += tmpl("praisecontrol_temp", { "hotel_name_praisecontrol": "nullChart" });
-
-                        chartsDiv.innerHTML += tmpl("comparison_temp", { "hotel_name": itemList[i] });
-                        // 在最后插入一个空容器
-                        if(i==itemList.length-1)
-                            chartsDiv.innerHTML += tmpl("comparison_temp", { "hotel_name": "nullChart" });
-
                     }
                 })();
                 // 请求酒店周期内各个床型的价格数据，初始化每个图表
@@ -845,7 +934,7 @@
                     async: true, // 异步
                     url: domain + getBedpraise + paramStr,
                     dataType: "json",
-                    timeout: 5000,
+                    timeout: 20000,
                     success: function (result) {
 
                         for (var key = 0; key<(result.length)/2;key++){
@@ -864,11 +953,6 @@
                             var myChart = echarts.init(document.getElementById(result[2*key]));
                             myChart.setOption(praisecontrol_option);
                         }
-
-                        var hotelInfo = result[i];
-                        var myChart = echarts.init(document.getElementById(hotelInfo["hotel_name"]));
-                        myChart.setOption(praisecontrol_option);
-
                     },
                     error: function (errorMsg) {
                         console.log(errorMsg);
@@ -922,7 +1006,6 @@
                             var myChart = echarts.init(document.getElementById(hotelInfo["hotel_name"]));
                             myChart.setOption(sentiment_comparison_option);
                             myChart.on(echarts.config.EVENT.CLICK, compClick(hotelInfo["hotel_name"]));
-
                         }
                     },
                     error: function (errorMsg) {
@@ -983,7 +1066,6 @@
                         alert("你输入的值有误,请输入完整参数或者重试");
                     }
                 });
-
                 return commentsData;
             }
 
@@ -1051,8 +1133,6 @@
                 return commentsHtml;
             }
         });
-
     });
-    
 })();
 

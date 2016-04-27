@@ -335,6 +335,13 @@ var hotelfenbu_option = {
             saveAsImage : {show: true}
         }
     },
+    grid: {
+        borderWidth: 0,
+        x: 30,
+        x2: 30,
+        y: 50,
+        y2: 30
+    },
     calculable : true,
     xAxis : [
         {
@@ -369,85 +376,47 @@ var hotelfenbu_option = {
 
 
 //酒店周边设施最远距离一览
-var maxdistance_option = {
+
+var aroundmaxdistanceoption = {
     title: {
-        text: '酒店最远设施一览',
+        text: '酒店周边设施最远距离',
+        x: 'center',
+        y: 0
     },
+
     tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            animation: false
-        },
-        formatter: function (params) {
-            return params[2].name + '<br />' + params[2].value;
-        }
+        formatter: '({c})'
     },
     grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '30%',
-        containLabel: true
+        borderWidth: 0,
+        x: 40,
+        x2: 30,
+        y: 10
+    },
+    xAxis:
+    {
+        axisLabel : {
+            show:false
+        },
+        type:'category',
+        data:[]
     },
 
-    xAxis: {
-        type: 'category',
-        data: [],
+    yAxis: [
+        {gridIndex: 0, min: 0, max: 1500}
 
-        splitLine: {
-            show: false
-        },
-        boundaryGap: false
-    },
-    yAxis: {
-        axisLabel: {
-            formatter: function (val) {
-                return val
-            }
-        },
-        splitNumber: 5,
-        splitLine: {
-            show: false
+    ],
+    series: [
+        {
+            name: 'I',
+            type: 'scatter',
+            xAxisIndex: [0],
+            yAxisIndex: [0],
+            data: [
+            ]
         }
-    },
-    series: [{
-        name: 'L',
-        type: 'line',
-        data: [],
-        lineStyle: {
-            normal: {
-                opacity: 0
-            }
-        },
-        stack: 'confidence-band',
-        symbol: 'none'
-    }, {
-        name: 'U',
-        type: 'line',
-        data: [],
-        lineStyle: {
-            normal: {
-                opacity: 0
-            }
-        },
-        areaStyle: {
-            normal: {
-                color: '#ccc'
-            }
-        },
 
-        symbol: 'none'
-    }, {
-        type: 'line',
-        data: [],
-        hoverAnimation: false,
-        symbolSize: 2,
-        itemStyle: {
-            normal: {
-                color: '#c23531'
-            }
-        },
-        showSymbol: false
-    }]
+    ]
 };
 
 
@@ -519,23 +488,22 @@ praisecontrol_option = {
         trigger: 'axis'
     },
 
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
     toolbox: {
         feature: {
             saveAsImage: {}
         }
     },
+    grid: {
+        borderWidth: 0,
+        x: 30,
+        x2: 30,
+        y: 50,
+        y2: 30
+    },
     xAxis: {
         type: 'category',
         boundaryGap: false,
-
         data: []
-
     },
     yAxis: {
         type: 'value'
