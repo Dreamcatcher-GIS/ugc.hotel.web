@@ -335,6 +335,13 @@ var hotelfenbu_option = {
             saveAsImage : {show: true}
         }
     },
+    grid: {
+        borderWidth: 0,
+        x: 30,
+        x2: 30,
+        y: 50,
+        y2: 30
+    },
     calculable : true,
     xAxis : [
         {
@@ -388,16 +395,15 @@ var aroundmaxdistanceoption = {
     },
     xAxis:
     {
-        axisLabel: {
-            show: false
+        axisLabel : {
+            show:false
         },
-        type: 'category',
-        data: []
+        type:'category',
+        data:[]
     },
 
     yAxis: [
-        { gridIndex: 0, min: 0, max: 1500 }
-
+        {gridIndex: 0, min: 0, max: 1500}
     ],
     series: [
         {
@@ -481,23 +487,22 @@ praisecontrol_option = {
         trigger: 'axis'
     },
 
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
     toolbox: {
         feature: {
             saveAsImage: {}
         }
     },
+    grid: {
+        borderWidth: 0,
+        x: 30,
+        x2: 30,
+        y: 50,
+        y2: 30
+    },
     xAxis: {
         type: 'category',
         boundaryGap: false,
-
         data: []
-
     },
     yAxis: {
         type: 'value'

@@ -434,95 +434,95 @@
                     timeout: 50000,
                     success: function (result) {
                         aroundmaxdistanceoption["series"][0]["data"] = [];
-                        aroundmaxdistanceoption["xAxis"]["data"] = [];
+                        aroundmaxdistanceoption["xAxis"]["data"] = []
 
                         for (var key in result) {
-                            if (key < 200) {
-                                if (result[key][1][1] <= 100) {
+                            if (key < 1500) {
+                                if (result[key][1][1]<=100) {
                                     aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
                                     aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
                                 }
                             }
-                            if (key < 1200) {
+                            if (key < 1000) {
                                 drwa_maxdistance_circular(result[key][0][1][0], result[key][0][1][1], result[key][1][1]);
                             }
 
                         }
                         for (var key in result) {
-                            if (key < 200) {
-                                if (result[key][1][1] > 100 && result[key][1][1] <= 200) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>100&&result[key][1][1]<=200) {
                                     aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
                                     aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
                                 }
                             }
                         }
                         for (var key in result) {
-                            if (key < 200) {
-                                if (result[key][1][1] > 200 && result[key][1][1] <= 300) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>200&&result[key][1][1]<=300) {
                                     aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
                                     aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
                                 }
                             }
                         }
                         for (var key in result) {
-                            if (key < 200) {
-                                if (result[key][1][1] > 300 && result[key][1][1] <= 400) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>300&&result[key][1][1]<=400) {
                                     aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
                                     aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
                                 }
                             }
                         }
                         for (var key in result) {
-                            if (key < 200) {
-                                if (result[key][1][1] > 400 && result[key][1][1] <= 500) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>400&&result[key][1][1]<=500) {
                                     aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
                                     aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
                                 }
                             }
                         }
                         for (var key in result) {
-                            if (key < 200) {
-                                if (result[key][1][1] > 500 && result[key][1][1] <= 600) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>500&&result[key][1][1]<=600) {
                                     aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
                                     aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
                                 }
                             }
                         }
                         for (var key in result) {
-                            if (key < 200) {
-                                if (result[key][1][1] > 600 && result[key][1][1] <= 700) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>600&&result[key][1][1]<=700) {
                                     aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
                                     aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
                                 }
                             }
                         }
                         for (var key in result) {
-                            if (key < 200) {
-                                if (result[key][1][1] > 700 && result[key][1][1] <= 800) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>700&&result[key][1][1]<=800) {
                                     aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
                                     aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
                                 }
                             }
                         }
                         for (var key in result) {
-                            if (key < 200) {
-                                if (result[key][1][1] > 800 && result[key][1][1] <= 900) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>800&&result[key][1][1]<=900) {
                                     aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
                                     aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
                                 }
                             }
                         }
                         for (var key in result) {
-                            if (key < 200) {
-                                if (result[key][1][1] > 900 && result[key][1][1] <= 1000) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>900&&result[key][1][1]<=1000) {
                                     aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
                                     aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
                                 }
                             }
                         }
                         for (var key in result) {
-                            if (key < 200) {
-                                if (result[key][1][1] > 1000) {
+                            if (key < 1500) {
+                                if (result[key][1][1]>1000) {
                                     aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
                                     aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
                                 }
@@ -530,7 +530,7 @@
                         }
                         loadaroundfac('zhoubiansheshi');
                         load_maxdistance('zuiyuanjvli');
-                        map.centerAndZoom([118.7, 32], 11);
+                        map.centerAndZoom([118.7,32], 11);
                     },
                     error: function (errorMsg) {
                         console.log(errorMsg);
@@ -546,7 +546,7 @@
              * @param hotelY
              * @param banjing
              */
-            function drwa_maxdistance_circular(hotelX, hotelY, banjing) {
+            function drwa_maxdistance_circular(hotelX,hotelY,banjing){
                 if (hotelX != 118.77807440803) {
                     if(hotelX != 118.77829690033) {
                         if (hotelX != 118.79560564853) {
@@ -588,18 +588,17 @@
                     async: true, // 异步
                     url: domain + getArroudFacility,
                     dataType: "json",
-                    timeout: 5000,
+                    timeout: 50000,
                     success: function (result) {
 
                         for (var key in result) {
                             for (var key2 in result[key][1])
                             {
-                                drwaPoint(result[key][1][key2][0],result[key][1][key2][1]);
+                                //drwaPoint(result[key][1][key2][0],result[key][1][key2][1]);
                                 drawLine(result[key][0][0],result[key][0][1],result[key][1][key2][0],result[key][1][key2][1]);
                             }
                         }
-
-                        loadWordCloud(container);
+                        map.centerAndZoom([118.7,32], 11);
                     },
                     error: function (errorMsg) {
                         console.log(errorMsg);
@@ -617,7 +616,20 @@
             function drwaPoint(currentX,currentY){
 
                 var pt = new Point(currentX,currentY,new SpatialReference({wkid:4326}));
-                var symbol = new SimpleMarkerSymbol();
+                var symbol = new SimpleMarkerSymbol({
+                    "color": [255,0,0],
+                    "size": 4,
+                    "angle": -30,
+                    "xoffset": 0,
+                    "yoffset": 0,
+                    "type": "esriSMS",
+                    "style": "esriSMSCircle",
+                    "outline": {
+                        "color": [0,0,0,255],
+                        "width": 1,
+                        "type": "esriSLS",
+                        "style": "esriSLSSolid"}
+                });
                 var graphic = new Graphic(pt,symbol);
                 gl.add(graphic);
                 //map.centerAndZoom(pt, 17);
@@ -630,14 +642,14 @@
              * @param currentX
              * @param currentY
              */
-            function drawLine(hotelX, hotelY, currentX, currentY) {
-                var pt = new Polyline([[hotelX, hotelY], [currentX, currentY]], new SpatialReference({ wkid: 4326 }));
+            function drawLine(hotelX,hotelY,currentX,currentY){
+                var pt = new Polyline([[hotelX,hotelY],[currentX,currentY]],new SpatialReference({wkid:4326}));
                 var symbol = new SimpleLineSymbol(
                     SimpleLineSymbol.STYLE_DASH,
-                    new Color([138, 43, 226]),
+                    new Color([138,43,226]),
                     1
                 );
-                var graphic = new Graphic(pt, symbol);
+                var graphic = new Graphic(pt,symbol);
                 gl.add(graphic);
             }
 
@@ -830,7 +842,7 @@
              * 加载酒店最远距离设施图表
              * @param container
              */
-            function load_maxdistance(container) {
+            function load_maxdistance(container){
                 var myChart = echarts.init(document.getElementById(container));
                 myChart.setOption(aroundmaxdistanceoption);
             }
@@ -1077,7 +1089,6 @@
                                 setModeFlag(flag);
                                 break;
                         }
-
                     });
                 });
 
@@ -1226,7 +1237,7 @@
                     async: true, // 异步
                     url: domain + getroomnum + paramStr,
                     dataType: "json",
-                    timeout: 5000,
+                    timeout: 20000,
                     success: function (result) {
                         for (var key=0;key<(result.length)/2;key++){
                             praisecontrol_option["xAxis"]["data"] = ['3-31','3-14','3-17','3-19','3-21'];
@@ -1241,7 +1252,6 @@
                             }
                             var myChart = echarts.init(document.getElementById(result[2*key]));
                             myChart.setOption(praisecontrol_option);
-
                         }
                     },
                     error: function (errorMsg) {
@@ -1269,10 +1279,6 @@
                         // 在最后插入一个空容器
                         if(i==itemList.length-1)
                             chartsDiv.innerHTML += tmpl("praisecontrol_temp", { "hotel_name_praisecontrol": "nullChart" });
-
-                        chartsDiv.innerHTML += tmpl("comparison_temp", { "hotel_name": itemList[i] });
-                     
-
                     }
                 })();
                 // 请求酒店周期内各个床型的价格数据，初始化每个图表
@@ -1282,7 +1288,7 @@
                     async: true, // 异步
                     url: domain + getBedpraise + paramStr,
                     dataType: "json",
-                    timeout: 5000,
+                    timeout: 20000,
                     success: function (result) {
 
                         for (var key = 0; key<(result.length)/2;key++){
@@ -1301,8 +1307,6 @@
                             var myChart = echarts.init(document.getElementById(result[2*key]));
                             myChart.setOption(praisecontrol_option);
                         }
-
-                  
                     },
                     error: function (errorMsg) {
                         console.log(errorMsg);
@@ -1356,7 +1360,6 @@
                             var myChart = echarts.init(document.getElementById(hotelInfo["hotel_name"]));
                             myChart.setOption(sentiment_comparison_option);
                             myChart.on(echarts.config.EVENT.CLICK, compClick(hotelInfo["hotel_name"]));
-
                         }
                     },
                     error: function (errorMsg) {
@@ -1417,7 +1420,6 @@
                         alert("你输入的值有误,请输入完整参数或者重试");
                     }
                 });
-
                 return commentsData;
             }
 
@@ -1485,6 +1487,5 @@
                 return commentsHtml;
             }
         });
-
     });
 })();
