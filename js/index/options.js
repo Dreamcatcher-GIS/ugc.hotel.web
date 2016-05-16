@@ -318,7 +318,7 @@ var traceMapOption = {
 //酒店最远设施分布图表
 var hotelfenbu_option = {
     title : {
-        text: '最远距离分布',
+        text: '最远距离分布'
     },
     tooltip : {
         trigger: 'axis'
@@ -346,7 +346,7 @@ var hotelfenbu_option = {
     xAxis : [
         {
             type : 'category',
-            data : ['100以下','100-200','200-300','300-400','400-500','500-600','600-700','700-800','800-900','900-1000','1000以上']
+            data : ['0-300','300-500','500-800','800-1000','1000-1200','1200-1400','1400-1600','1600-1800','1800-2000']
         }
     ],
     yAxis : [
@@ -358,7 +358,7 @@ var hotelfenbu_option = {
         {
             name:'数量',
             type:'bar',
-            data:[370,511,167,132,53,41,28,43,39,34,110],
+            data:[58,51,105,72,85,128,181,254,193],
             markPoint : {
                 data : [
                     {type : 'max', name: '最大值'},
@@ -403,7 +403,6 @@ var aroundmaxdistanceoption = {
     },
 
     yAxis: [
-        {gridIndex: 0, min: 0, max: 1500}
 
     ],
     series: [
