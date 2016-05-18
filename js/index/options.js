@@ -442,7 +442,7 @@ var treandChart_option = {
             data: function() {
                 var list = [];
                 for (var i = 1; i <= 30; i++) {
-                    list.push('2016-03-' + i);
+                    list.push('2016-04-' + i);
                 }
                 return list;
             }()
@@ -461,7 +461,7 @@ var treandChart_option = {
         data: function () {
             var list = [];
             for (var i = 1; i <= 30; i++) {
-                list.push(Math.round(Math.random() * 10));
+                list.push(Math.round(Math.random() * 100));
             }
             return list;
         }(),
