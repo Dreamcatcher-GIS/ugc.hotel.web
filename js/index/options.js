@@ -493,7 +493,7 @@ praisecontrol_option = {
     },
     grid: {
         borderWidth: 0,
-        x: 30,
+        x: 1,
         x2: 30,
         y: 50,
         y2: 30
@@ -504,7 +504,7 @@ praisecontrol_option = {
         data: []
     },
     yAxis: {
-        type: 'value'
+        type: 'value',
     },
     series: [
 

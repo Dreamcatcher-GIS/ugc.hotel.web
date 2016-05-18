@@ -60,6 +60,8 @@
 
             var gl;
 
+            var gc;
+
             var gf;
 
             var hotelLayer, hexagonLayer,streetLayer,sightsoptLayer,traceLayer,tracePointLayer;
@@ -185,6 +187,8 @@
                 map.addLayer(gf);
                 traceLayer = new GraphicsLayer();
                 map.addLayer(traceLayer);
+                gc = new GraphicsLayer({ id: "pointLayers" });
+                map.addLayer(gc);
                 
                 
                 // 添加酒店要素图层
@@ -197,6 +201,7 @@
                 map.addLayer(tracePointLayer);
                 // 蜂窝六边形图层
                 map.addLayer(hexagonLayer);
+
 
                 
             })();
@@ -492,6 +497,7 @@
             // 按钮-清除周边设施图层
             $("#qingchutuceng").click(function () {
                 gl.clear();
+                gc.clear();
             });
 
             /**
@@ -566,7 +572,7 @@
                     2
                 );
                 var graphic = new Graphic(pt,symbol);
-                gl.add(graphic);
+                gc.add(graphic);
             }
 
 
