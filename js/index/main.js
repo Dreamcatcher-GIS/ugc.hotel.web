@@ -323,7 +323,7 @@
             */
             function updateAndSetSentimentChart(container) {
                 var baseinfo = getBaseinfo(baseinfoList);
-                var paramStr = "?baseinfo_id=" + baseinfo["id"] + "&location_id=" + baseinfo["location_id"];
+                var paramStr = "?baseinfo_id=" + baseinfo["id"];
                 sentiment_option["yAxis"][0]["data"] = [];
                 sentiment_option["series"][0]["data"] = [];
                 $.ajax({
