@@ -1,4 +1,5 @@
-﻿var domain = "http://localhost:5000";
+//var domain = "http://192.168.1.123:5000";
+var domain = "http://localhost:5000";
 //评论类型数获取
 var getCommTypeNum = "/ugc.hotel/rest/v100/hotel/get/type_score/statics";
 var getViewpoint = "/ugc.hotel/rest/v100/hotel/get/viewpoint";
@@ -14,8 +15,7 @@ var getBaseinfoUrl = "/ugc.hotel/rest/v100/hotel/get/baseinfo";
 var getHotelTrace = "/ugc.hotel/rest/v100/hotel/get/user_trace";
 var getViewpointTuniu = "/ugc.hotel/rest/v100/hotel/get/tuniu/viewpoint";
 
-
-var serverDomain = "http://localhost:6080";
+var serverDomain = "http://192.168.1.123:6080";
 var gpUrl = '/arcgis/rest/services/GP/Honeycomb/GPServer/Honeycomb';
 var hotelUrl = "/arcgis/rest/services/NJ_Hotel/FeatureServer/0";
 var streetUrl = "/arcgis/rest/services/NJ_Hotel/FeatureServer/1";

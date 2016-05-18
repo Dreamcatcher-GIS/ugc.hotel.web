@@ -437,99 +437,14 @@
                         aroundmaxdistanceoption["xAxis"]["data"] = []
 
                         for (var key in result) {
-                            if (key < 1500) {
-                                if (result[key][1][1]<=100) {
-                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
-                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
-                                }
-                            }
-                            if (key < 1000) {
+
+                            if (key < 1200) {
                                 drwa_maxdistance_circular(result[key][0][1][0], result[key][0][1][1], result[key][1][1]);
                             }
 
                         }
-                        for (var key in result) {
-                            if (key < 1500) {
-                                if (result[key][1][1]>100&&result[key][1][1]<=200) {
-                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
-                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
-                                }
-                            }
-                        }
-                        for (var key in result) {
-                            if (key < 1500) {
-                                if (result[key][1][1]>200&&result[key][1][1]<=300) {
-                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
-                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
-                                }
-                            }
-                        }
-                        for (var key in result) {
-                            if (key < 1500) {
-                                if (result[key][1][1]>300&&result[key][1][1]<=400) {
-                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
-                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
-                                }
-                            }
-                        }
-                        for (var key in result) {
-                            if (key < 1500) {
-                                if (result[key][1][1]>400&&result[key][1][1]<=500) {
-                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
-                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
-                                }
-                            }
-                        }
-                        for (var key in result) {
-                            if (key < 1500) {
-                                if (result[key][1][1]>500&&result[key][1][1]<=600) {
-                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
-                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
-                                }
-                            }
-                        }
-                        for (var key in result) {
-                            if (key < 1500) {
-                                if (result[key][1][1]>600&&result[key][1][1]<=700) {
-                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
-                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
-                                }
-                            }
-                        }
-                        for (var key in result) {
-                            if (key < 1500) {
-                                if (result[key][1][1]>700&&result[key][1][1]<=800) {
-                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
-                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
-                                }
-                            }
-                        }
-                        for (var key in result) {
-                            if (key < 1500) {
-                                if (result[key][1][1]>800&&result[key][1][1]<=900) {
-                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
-                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
-                                }
-                            }
-                        }
-                        for (var key in result) {
-                            if (key < 1500) {
-                                if (result[key][1][1]>900&&result[key][1][1]<=1000) {
-                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
-                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
-                                }
-                            }
-                        }
-                        for (var key in result) {
-                            if (key < 1500) {
-                                if (result[key][1][1]>1000) {
-                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0])
-                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
-                                }
-                            }
-                        }
                         loadaroundfac('zhoubiansheshi');
-                        load_maxdistance('zuiyuanjvli');
+
                         map.centerAndZoom([118.7,32], 11);
                     },
                     error: function (errorMsg) {
@@ -547,14 +462,14 @@
              * @param banjing
              */
             function drwa_maxdistance_circular(hotelX,hotelY,banjing){
-                if (hotelX != 118.77807440803) {
-                    if(hotelX != 118.77829690033) {
-                        if (hotelX != 118.79560564853) {
-                            if(hotelX != 118.79535319773) {
-                                if(hotelX != 118.79157998222) {
-                                    if (hotelX != 118.79189629625) {
+                //if (hotelX != 118.77807440803) {
+                //    if(hotelX != 118.77829690033) {
+                        //if (hotelX != 118.79560564853) {
+                        //    if(hotelX != 118.79535319773) {
+                        //        if(hotelX != 118.79157998222) {
+                        //            if (hotelX != 118.79189629625) {
                                         var pt = new Point(hotelX, hotelY, map.spatialReference);
-                                        var symbol = new SimpleFillSymbol().setColor(null).outline.setColor("red");
+                                        var symbol = new SimpleFillSymbol().setColor(null).outline.setColor("green");
                                         var circle = new Circle({
                                             center: pt,
                                             geodesic: true,
@@ -562,12 +477,12 @@
                                         });
                                         var graphic = new Graphic(circle, symbol);
                                         gl.add(graphic);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                                    //}
+                                //}
+                            //}
+                        //}
+                    //}
+                //}
             }
 
             //点击邻近分析按钮,绘制酒店与周边设施的连线
@@ -580,7 +495,7 @@
             });
 
             /**
-             * 获取数据绘制周边设施点
+             * 获取数据绘制周边设施连线和点
              */
             function drawpoint() {
                 $.ajax({
@@ -594,7 +509,8 @@
                         for (var key in result) {
                             for (var key2 in result[key][1])
                             {
-                                //drwaPoint(result[key][1][key2][0],result[key][1][key2][1]);
+                                //drwaPoint(result[key][1][key2][0],result[key][1][key2][1]);  //设施坐标点
+                                //drwaPoint(result[key][0][0],result[key][0][1]); //酒店坐标点
                                 drawLine(result[key][0][0],result[key][0][1],result[key][1][key2][0],result[key][1][key2][1]);
                             }
                         }
@@ -646,8 +562,8 @@
                 var pt = new Polyline([[hotelX,hotelY],[currentX,currentY]],new SpatialReference({wkid:4326}));
                 var symbol = new SimpleLineSymbol(
                     SimpleLineSymbol.STYLE_DASH,
-                    new Color([138,43,226]),
-                    1
+                    new Color([255,0,0]),
+                    2
                 );
                 var graphic = new Graphic(pt,symbol);
                 gl.add(graphic);
@@ -836,7 +752,65 @@
             function loadaroundfac(container){
                 var myChart = echarts.init(document.getElementById(container));
                 myChart.setOption(hotelfenbu_option);
+                myChart.on(echarts.config.EVENT.CLICK, function(params){
+                    var scopelist = (params.name).split("-");
+                    draw_maxdistance_circular_fixed(scopelist[0],scopelist[1])
+                });
             }
+
+            function draw_maxdistance_circular_fixed(min,max) {
+                $.ajax({
+                    type: "get",
+                    async: true, // 异步
+                    url: domain + getMaxDistance,
+                    dataType: "json",
+                    timeout: 30000,
+                    success: function (result) {
+                        gl.clear();
+                        aroundmaxdistanceoption["xAxis"]["data"] = [];
+                        aroundmaxdistanceoption["series"][0]["data"] = [];
+                        aroundmaxdistanceoption["yAxis"].push({gridIndex: 0, min: min, max: max});
+                        for (var key in result) {
+                            if (key < 1000) {
+                                drwa_maxdistance_circular_fixed(result[key][0][1][0], result[key][0][1][1], result[key][1][1], min, max);
+                            }
+                            if (key < 1000) {
+                                if (result[key][1][1] > min && result[key][1][1] <= max) {
+                                    aroundmaxdistanceoption["xAxis"]["data"].push(result[key][0][0]);
+                                    aroundmaxdistanceoption["series"][0]["data"].push([result[key][0][0], result[key][1][1]]);
+                                }
+                            }
+                        }
+                        load_maxdistance('zuiyuanjvli');
+                        aroundmaxdistanceoption["yAxis"] = [];
+                    },
+                    error: function (errorMsg) {
+                        console.log(errorMsg);
+                        alert("你输入的值有误,请输入完整参数或者重试");
+                    }
+                });
+            }
+
+            function drwa_maxdistance_circular_fixed(hotelX,hotelY,banjing,min,max){
+                if (banjing>=min&&banjing<=max) {
+                    var pt = new Point(hotelX, hotelY, map.spatialReference);
+                    var symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                        new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT,
+                        new Color([148,0,211]), 2),new Color([0,255,255])
+                    );
+                    var circle = new Circle({
+                        center: pt,
+                        geodesic: true,
+                        radius: banjing
+                    });
+                    var graphic = new Graphic(circle, symbol);
+                    gl.add(graphic);
+                }
+            }
+
+
+
+
 
             /**
              * 加载酒店最远距离设施图表
@@ -845,6 +819,7 @@
             function load_maxdistance(container){
                 var myChart = echarts.init(document.getElementById(container));
                 myChart.setOption(aroundmaxdistanceoption);
+
             }
 
             
